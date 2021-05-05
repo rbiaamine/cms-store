@@ -1,0 +1,41 @@
+body{
+    background: #eee;
+}
+.login{
+    width: 300px;
+    margin: 100px auto;
+}
+.login input{
+    margin-bottom:10px;
+}
+.login .form-control {
+    background-color: #e5e5e5;
+}
+.main-table td{
+    background-color:#fff;
+    vertical-align: middle ;
+}
+.main-table tr:first-child td {
+    background-color:#333;
+    color:#fff;
+}
+.home-stat .stat{
+    background-color: #ccc;
+    border: 1px solid #666;
+    padding: 20px;
+    font-size:25px;
+}
+.home-stat .stat span{
+    display:block;
+    font-size: 50px;
+}
+.latest {
+    margin-top: 15px;
+    
+}
+.latest .panel{
+    border: 1px solid #666;
+    background-color: #ccc;
+    padding: 10px 0;
+
+}
