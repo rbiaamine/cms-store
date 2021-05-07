@@ -11,7 +11,11 @@ if (isset($_SESSION['Username'])) {
   <!-- Start Manage page -->
   <?php if ($do == 'Manage') : ?>
     <?php //select users from database
-    $stmt = $dbconnection->prepare('SELECT * FROM users');
+    $query = '';
+    if (isset($_GET['page']) && $_GET['page'] == 'pending') {
+      $query = 'AND regstatus = 0';
+    }
+    $stmt = $dbconnection->prepare("SELECT * FROM users WHERE groupid != 1 $query");
     $stmt->execute();
     $rows = $stmt->fetchAll();
     ?>
@@ -38,6 +42,12 @@ if (isset($_SESSION['Username'])) {
               <td>
                 <a href="?do=Edit&userid=<?= $row['userid']; ?>" class="btn  rounded-circle btn-outline-primary" style="padding:.37em .475rem;"><i class="fas fa-user-edit "></i></a>
                 <a href="?do=Delete&userid=<?= $row['userid']; ?>" class="btn  rounded-circle btn-outline-danger confirm" style="padding:.37em .475rem;"><i class="fas fa-user-times "></i></a>
+
+                <?php
+                if ($row['regstatus'] == 0) {
+                  echo '<a href="?do=Activate&userid=' . $row['userid'] . '" class="btn rounded-circle btn-outline-success" style="padding:.37em .5rem;"><i class="fas fa-user-check " ></i></a>';
+                }
+                ?>
               </td>
             </tr>
           <?php endforeach ?>
@@ -114,7 +124,7 @@ if (isset($_SESSION['Username'])) {
         if ($check == 0) {
 
 
-          $stmt = $dbconnection->prepare("INSERT INTO users(username, password, email, fullname,singup_date) VALUES (:username, :password, :email, :fullname, now())");
+          $stmt = $dbconnection->prepare("INSERT INTO users(username, password, email, fullname,regstatus,singup_date) VALUES (:username, :password, :email, :fullname, 1,now())");
           //$stmt->bindParam(':username', $username);
           //$stmt->bindParam(':password', $password);
           //$stmt->bindParam(':email', $email);
@@ -129,14 +139,14 @@ if (isset($_SESSION['Username'])) {
           echo $count;
           if ($count > 0) {
             $msg = '<div class="container"><div class="alert alert-success"> User Seccessefully registred </div></div>';
-            redirectHome($msg, 'members.php',3,'members.php');
+            redirectHome($msg, 'members.php', 3, 'members.php');
           } else {
             $msg = 'not registred';
-            redirectHome($msg, 'back'); 
+            redirectHome($msg, 'back');
           }
         } else {
           $msg = '<div class="alert alert-danger">' . $username . ' is used choose an other username please :) v2 </div>';
-          redirectHome($msg,'back',3,'?do=Manage');
+          redirectHome($msg, 'back', 3, '?do=Manage');
         }
       } else {
         foreach ($formErrors as $error) {
@@ -262,22 +272,38 @@ if (isset($_SESSION['Username'])) {
     //$stmt = $dbconnection->prepare('SELECT * FROM users WHERE userid = ?');
     //// execute query    
     //$stmt->execute(array($userid));
-//
+    //
     ////check if isset id data row count > 0     
     //$count = $stmt->rowCount();
     ////if isset usetid & userid > 0 show the form
-    $check = checkItem($userid,'users',$userid);
+    $check = checkItem($userid, 'users');
     if ($check > 0) {
       $stmt = $dbconnection->prepare("DELETE FROM users WHERE userid = :userid");
       $stmt->bindParam(':userid', $userid);
       $stmt->execute();
       $msg = '<div class="alert alert-danger">' . $count . ' User Have Been Deleted.</div>';
-      redirectHome($msg,'back',3 ,'?do=Manage');
+      redirectHome($msg, 'back', 3, '?do=Manage');
     } else {
       $msg =  'this id is not exist?';
-      redirectHome($msg,'back');
+      redirectHome($msg, 'back');
     }
     ?>
+  <?php elseif ($do == 'Activate') : ?>
+    <?php
+    $userid = (isset($_GET['userid']) && is_numeric($_GET['userid'])) ? intval($_GET['userid']) : 0;
+    $check = checkItem($userid, 'users');
+    if ($check > 0) {
+      $stmt = $dbconnection->prepare("UPDATE  users SET regstatus = 1 WHERE userid = :userid");
+      $stmt->bindParam(':userid', $userid);
+      $stmt->execute();
+      $msg = '<div class="alert alert-success">' . $count . ' User Have Been Activated.</div>';
+      redirectHome($msg, 'back', 3, '?do=Manage');
+    } else {
+      $msg =  'this id is not exist?';
+      redirectHome($msg, 'back');
+    }
+   ?>    
+
   <?php endif ?>
 <?php include $tpl . 'footer.php';
 } else {

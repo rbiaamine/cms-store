@@ -20,13 +20,13 @@ HTML;
 
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
-  <a class="navbar-brand" href="#"><?php echo lang('HOME_ADMIN'); ?></a>
+  <a class="navbar-brand" href="dashboard.php"><?php echo lang('HOME_ADMIN'); ?></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
-      <?= navItem(lang('CATEGORIES'), '/ecom/admin/dashboard.php') ?>
+      <?= navItem(lang('CATEGORIES'), '/ecom/admin/categories.php') ?>
       <?= navItem(lang('ITEMS'), '/ecom/admin/category.php') ?>
       <?= navItem(lang('MEMBERS'), '/ecom/admin/members.php') ?>
       <?= navItem(lang('STATISTICS'), '/ecom/admin/index.php') ?>

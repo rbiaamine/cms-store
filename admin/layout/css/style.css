@@ -1,5 +1,5 @@
 body{
-    background: #eee;
+    background: linear-gradient(to right, #eee, #ccc);
 }
 .login{
     width: 300px;
@@ -19,9 +19,16 @@ body{
     background-color:#333;
     color:#fff;
 }
+.home-stat h2{
+    margin: 50px 0;
+}
+.home-stat .stat a{
+    text-decoration: none;
+    color: #fff;
+}
 .home-stat .stat{
-    background-color: #ccc;
-    border: 1px solid #666;
+    border-radius: 10px;
+    color: #fff;
     padding: 20px;
     font-size:25px;
 }
@@ -30,12 +37,49 @@ body{
     font-size: 50px;
 }
 .latest {
-    margin-top: 15px;
+    margin-top: 30px;
+    
     
 }
-.latest .panel{
-    border: 1px solid #666;
-    background-color: #ccc;
-    padding: 10px 0;
-
+.home-stat .members{
+    background-color: #3477db;
 }
+.home-stat .items   {
+    background-color: rgb(4, 180, 19);
+}
+.home-stat .comments{
+    background-color: rgb(231, 199, 20);
+}
+.home-stat .pending{
+    background-color: rgb(180, 4, 28);
+}
+.list-group-item{
+    overflow: hidden;
+}
+.latest-users{
+    margin-bottom: 0;
+}
+.latest-users li {
+    padding: 5px 20px;
+    overflow: hidden;
+    text-align: left;
+    line-height: 35px;
+    
+    
+}
+.latest-users li:nth-child(even) {
+    background-color: #eee;
+}
+.latest-users li a{
+    float: right;
+    margin-left: 15px;
+}
+.edit-btn{
+    font-size: 25px;
+    margin-right: 10px;
+}
+.delete-btn{
+    font-size: 25px;
+    color: rgb(209, 49, 9);
+}
+
