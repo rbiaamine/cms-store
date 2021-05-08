@@ -27,7 +27,7 @@ HTML;
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
       <?= navItem(lang('CATEGORIES'), '/ecom/admin/categories.php') ?>
-      <?= navItem(lang('ITEMS'), '/ecom/admin/category.php') ?>
+      <?= navItem(lang('ITEMS'), '/ecom/admin/items.php') ?>
       <?= navItem(lang('MEMBERS'), '/ecom/admin/members.php') ?>
       <?= navItem(lang('STATISTICS'), '/ecom/admin/index.php') ?>
       <?= navItem(lang('LOGS'), '/ecom/admin/index.php') ?>

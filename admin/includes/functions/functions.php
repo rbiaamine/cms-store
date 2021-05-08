@@ -23,10 +23,10 @@ function redirectHome($msg, $url = null, $second = 3, $url2 = 'index.php')
 
     if ($url == null) {
         $url = 'index.php';
-    } elseif ($url2 !== 'index.php') {
-        $url = $url2;
-    } else {
+    } elseif ($url == 'back' && $url2 =='index.php') {
         $url = isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] !== '' ? $_SERVER['HTTP_REVERER'] : $url2;
+    } else {
+        $url = $url2;
     }
     echo $msg;
     header("refresh:$second;url= $url");
