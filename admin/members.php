@@ -6,8 +6,7 @@ session_start();
 $pageTitle = 'Members';
 if (isset($_SESSION['Username'])) {
   include 'init.php';
-  $do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
-?>
+  $do = isset($_GET['do']) ? $_GET['do'] : 'Manage'; ?>
   <!-- Start Manage page -->
   <?php if ($do == 'Manage') : ?>
     <?php //select users from database
@@ -247,19 +246,24 @@ if (isset($_SESSION['Username'])) {
       }
 
 
-      foreach ($formErrors as $error) {
-        echo ' <div class="container">
+      if (empty($formErrors)) {
+
+
+        //update the data in the database
+        $stmt = $dbconnection->prepare("UPDATE users SET username = ?, password = ? ,email = ? ,fullname = ? WHERE userid = ? ");
+        $stmt->execute(array($username, $pass, $email, $fullname, $id));
+        echo '<div class="container"> <div class="alert alert-success" >' . $stmt->rowCount() . ' record updated </div></div>';
+        //header('Location:dashboard.php');
+      } else {
+
+        foreach ($formErrors as $error) {
+          echo ' <div class="container">
         <div class="alert alert-danger">' . $error . '</div>
         </div>';
+        }
+        $msg = 'redirection . . .';
+        redirectHome($msg);
       }
-      $msg = 'redirection . . .';
-      redirectHome($msg);
-
-      //update the data in the database
-      $stmt = $dbconnection->prepare("UPDATE users SET username = ?, password = ? ,email = ? ,fullname = ? WHERE userid = ? ");
-      $stmt->execute(array($username, $pass, $email, $fullname, $id));
-      echo '<div class="container"> <div class="alert alert-success" >' . $stmt->rowCount() . ' record updated </div></div>';
-      //header('Location:dashboard.php');
     } else {
       $msg = 'permission denieded';
       redirectHome($msg);
@@ -302,7 +306,7 @@ if (isset($_SESSION['Username'])) {
       $msg =  'this id is not exist?';
       redirectHome($msg, 'back');
     }
-   ?>    
+    ?>
 
   <?php endif ?>
 <?php include $tpl . 'footer.php';
